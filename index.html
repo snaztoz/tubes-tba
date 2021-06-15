@@ -14,7 +14,42 @@
   </head>
 
   <body>
-    <h1>Hello, world!</h1>
+    <div class="container my-3 d-flex flex-column align-items-center">
+      <h1 class="text-center">Simulasi Turing Machine</h1>
+      <form action="#" id="form" class="col-8 col-lg-6 my-3">
+      <!-- Pilihan Operasi -->
+        <div>
+          <select id="jenis-operasi" class="form-select" aria-label="Default select example">
+            <option selected>Jenis Operasi</option>
+            <option value="penjumlahan">Penjumlahan</option>
+            <option value="pengurangan">Pengurangan</option>
+            <option value="perkalian">Perkalian</option>
+            <option value="faktorial">Faktorial</option>
+            <option value="modulo">Modulo</option>
+            <option value="perpangkatan">Perpangkatan</option>
+            <option value="logaritma-biner">Logaritma biner</option>
+          </select>
+        </div>
+
+        <div class="mt-3 d-flex justify-content-between align-items-baseline">
+        <!-- Bilangan pertama -->
+          <div class="col-5">
+            <input id="bilangan-1" class="form-control" placeholder="Bilangan 1" />
+          </div>
+
+          <p>oleh</p>
+
+        <!-- Bilangan kedua -->
+          <div class="col-5">
+            <input id="bilangan-2" class="form-control" placeholder="Bilangan 2" />
+          </div>
+        </div>
+
+        <div class="mt-3 d-flex justify-content-center">
+          <button id="form-submit" class="btn btn-primary">Jalankan</button>
+        </div>
+      </form>
+    </div>
 
     <script src="dependencies/bootstrap/js/bootstrap.min.js"></script>
     <script src="dependencies/jquery/slick/slick.js"></script>
