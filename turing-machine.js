@@ -249,6 +249,37 @@ class TapeController
     }
 }
 
+class Operator
+{
+    static _operator = new Operator()
+
+    static use(rules)
+    {
+        _operator.rules = rules
+    }
+
+    setOperation(jenisOperasi)
+    {
+        this.jenisOperasi = jenisOperasi
+    }
+
+    setInput(input)
+    {
+        this.input = input
+    }
+
+    setMovement(moveLeft, moveRight)
+    {
+        this.moveLeft = moveLeft
+        this.moveRight = moveRight
+    }
+
+    setWriteHandler(writeHandler)
+    {
+        this.writeHandler = writeHandler
+    }
+}
+
 // Memeriksa apakah string yang diberikan berisikan sebuah
 // value integer yang valid.
 function isIntegerString(text)
