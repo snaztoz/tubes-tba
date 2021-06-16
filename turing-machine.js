@@ -236,25 +236,31 @@ class TapeController
 
     writeToTapeAt(index, text)
     {
-        const tapeNullLeftIndex = this.tapeDataArray.length - 1
-        const tapeNullRightIndex = this.tapeDataArray.length - 3
+        const tapeStart = this.tapeDataArray.length - 1
+        const tapeEnd = this.tapeDataArray.length - 4
 
-        if (index === tapeNullLeftIndex)
+        if (index === tapeStart)
         {
-            const el = $.parseHTML(this.templateData)
-            el.html(text)
-            $(this.tapeEl).slick('slickAdd', el, true)
+            this.writeToNewRoomAt(0, text)
         }
-        else if (index === tapeNullRightIndex)
+        else if (index === tapeEnd)
         {
-            const el = $.parseHTML(this.templateData)
-            el.html(text)
-            $(this.tapeEl).slick('slickAdd', el, tapeNullRightIndex, true)
+            this.writeToNewRoomAt(tapeEnd, text)
         }
         else
         {
+            this.tapeDataArray[index] = text
             $(`[data-slick-index=${index}]`).html(text)
         }
+    }
+
+    writeToNewRoomAt(index, text)
+    {
+        this.tapeDataArray.splice(index, 0, text)
+
+        const el = $.parseHTML(this.templateData)
+        $(el).html(text)
+        $(this.tapeEl).slick('slickAdd', el, index, true)
     }
 }
 
@@ -292,6 +298,69 @@ class Operator
     {
         this.writeHandler = writeHandler
         return this
+    }
+
+    async run()
+    {
+        let currentState = this.rules[this.jenisOperasi]['start-state']
+        const endState = this.rules[this.jenisOperasi]['end-state']
+
+        while (currentState != endState)
+        {
+            await sleep(1000)
+
+            const stateRules = this.rules[this.jenisOperasi]['states'][currentState]
+            const input = this.input[this.headIndex]
+            let activeRule;
+
+            for (const rule of stateRules)
+            {
+                if (rule['receive'] == input)
+                {
+                    activeRule = rule
+                    break
+                }
+            }
+
+            if (!activeRule)
+            {
+                throw new Error(`state ${currentState} can't receive input ${input}`)
+            }
+
+            if (activeRule.hasOwnProperty('write'))
+            {
+                const textToWrite = activeRule['write'] ?? 'B'
+                this.writeHandler(this.headIndex, textToWrite)
+            }
+
+            if (!activeRule.hasOwnProperty('move'))
+            {
+                throw new Error(`state ${currentState} doesn't specify any movement`)
+            }
+
+            const {direction, nextState} = this.parseMovement(activeRule['move'])
+            if (direction === 'left')
+            {
+                this.moveLeft()
+                this.headIndex--
+            }
+            else
+            {
+                this.moveRight()
+                this.headIndex++
+            }
+
+            if (nextState)
+            {
+                if (!this.rules[this.jenisOperasi]['states']
+                        .hasOwnProperty(nextState))
+                {
+                    throw new Error(`unknown next state ${nextState}`)
+                }
+
+                currentState = nextState
+            }
+        }
     }
 
     parseMovement(movementString)
