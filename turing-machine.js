@@ -3,7 +3,7 @@
  */
  class TuringMachine
  {
-    constructor()
+    constructor(operationRules)
     {
         this.form = new Form('#form')
         this.tape = new TapeController('#tape')
