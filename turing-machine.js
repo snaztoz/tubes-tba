@@ -155,7 +155,7 @@ class TapeController
     constructor(tapeEl, operationRules)
     {
         this.tapeEl = tapeEl
-        this.tapeDataCount = 7 // termasuk data yang null juga
+        this.tapeDataArray = 'B'.repeat(7).split('')
         this.operationRules = operationRules
 
         this.templateNull = $('#template-tape-null').html()
@@ -167,7 +167,7 @@ class TapeController
             slidesToShow: 5,
         })
 
-        for (let i = 0; i < this.tapeDataCount; i++)
+        for (let i = 0; i < this.tapeDataArray.length; i++)
         {
             $(this.tapeEl).slick('slickAdd', this.templateNull)
         }
@@ -199,7 +199,6 @@ class TapeController
             }
 
             $(this.tapeEl).slick('slickAdd', el)
-            this.tapeDataCount++
         })
     }
 
@@ -210,10 +209,9 @@ class TapeController
 
     emptyTape()
     {
-        while (this.tapeDataCount > 0)
+        for (let i = 0; i < this.tapeDataArray.length, i++)
         {
-            $(this.tapeEl).slick('slickRemove', this.tapeDataCount - 1)
-            this.tapeDataCount--
+            $(this.tapeEl).slick('slickRemove', i)
         }
     }
 }
