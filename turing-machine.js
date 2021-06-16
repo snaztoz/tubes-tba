@@ -3,10 +3,10 @@
  */
  class TuringMachine
  {
-     constructor()
-     {
-         this.form = new Form('#form')
-     }
+    constructor()
+    {
+        this.form = new Form('#form')
+    }
  }
  
 /**
