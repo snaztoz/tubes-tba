@@ -236,20 +236,20 @@ class TapeController
 
     writeToTapeAt(index, text)
     {
-        const tapeNullEndIndex = this.tapeDataArray.length - 1
-        const tapeNullStartIndex = this.tapeDataArray.length - 3
+        const tapeNullLeftIndex = this.tapeDataArray.length - 1
+        const tapeNullRightIndex = this.tapeDataArray.length - 3
 
-        if (index === tapeNullStartIndex)
-        {
-            const el = $.parseHTML(this.templateData)
-            el.html(text)
-            $(this.tapeEl).slick('slickAdd', el, tapeNullEndIndex, true)
-        }
-        else if (index === tapeNullEndIndex)
+        if (index === tapeNullLeftIndex)
         {
             const el = $.parseHTML(this.templateData)
             el.html(text)
             $(this.tapeEl).slick('slickAdd', el, true)
+        }
+        else if (index === tapeNullRightIndex)
+        {
+            const el = $.parseHTML(this.templateData)
+            el.html(text)
+            $(this.tapeEl).slick('slickAdd', el, tapeNullRightIndex, true)
         }
         else
         {
