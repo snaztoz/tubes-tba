@@ -204,7 +204,16 @@ class TapeController
 
     run()
     {
-        console.log('menjalankan tape')
+        Operator
+            .use(this.operationRules)
+            .setOperation(this.jenisOperasi)
+            .setInput(this.tapeDataArray)
+            .setMovement(
+                () => this.moveLeft(),
+                () => this.moveRight()
+            )
+            .setWriteHandler(this.writeToTapeAt.bind(this))
+            .run()
     }
 
     emptyTape()
