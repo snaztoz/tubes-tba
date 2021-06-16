@@ -181,6 +181,10 @@ class TapeController
         this.applyTapeData()
     }
 
+    /**
+     * Mengaplikasikan isi dari this.tapeDataArray ke dalam
+     * tape pada DOM.
+     */
     applyTapeData()
     {
         this.emptyTape()
@@ -234,6 +238,12 @@ class TapeController
         $(this.tapeEl).slick('slickNext')
     }
 
+    /**
+     * Menulis text tertentu pada index yang diberikan.
+     *
+     * Method ini akan mengubah baik value di dalam this.tapeDataArray
+     * ataupun representasinya di dalam DOM itu sendiri.
+     */
     writeToTapeAt(index, text)
     {
         const tapeStart = this.tapeDataArray.length - 1
@@ -254,6 +264,13 @@ class TapeController
         }
     }
 
+    /**
+     * Membuat ruang baru sekaligus menuliskan isinya.
+     *
+     * Seperti method this.writeToTapeAt, method ini juga akan
+     * mengubah value di this.tapeDataArray dan juga pada tape
+     * di DOM.
+     */
     writeToNewRoomAt(index, text)
     {
         this.tapeDataArray.splice(index, 0, text)
@@ -300,6 +317,10 @@ class Operator
         return this
     }
 
+    /**
+     * Membaca rule operasi yang diberikan, kemudian menjalankan
+     * Turing Machine sesuai dengan rules yang diberikan.
+     */
     async run()
     {
         let currentState = this.rules[this.jenisOperasi]['start-state']
