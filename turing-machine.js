@@ -6,6 +6,7 @@
     constructor()
     {
         this.form = new Form('#form')
+        this.tape = new TapeController('#tape')
 
         this.start()
     }
@@ -140,6 +141,29 @@ class Serializer
             return `0${'1'.repeat(bilangan1)}0${'1'.repeat(bilangan2)}`
         }
         // TODO: tambahkan jenis operasi yang lainnya
+    }
+}
+
+/**
+ * Class yang mengendalikan object tape dari turing machine
+ */
+class TapeController
+{
+    constructor(tapeEl)
+    {
+        this.templateNull = $('#template-tape-null').html()
+        this.templateData = $('#template-tape-data').html()
+
+        for (let i = 0; i < 7; i++)
+        {
+            $(tapeEl).append(this.templateNull)
+        }
+
+        $(tapeEl).slick({
+            arrows: false,
+            centerMode: true,
+            slidesToShow: 5,
+        })
     }
 }
 
