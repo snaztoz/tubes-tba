@@ -214,6 +214,39 @@ class TapeController
             $(this.tapeEl).slick('slickRemove', i)
         }
     }
+
+    moveLeft()
+    {
+        $(this.tapeEl).slick('slickPrev')
+    }
+
+    moveRight()
+    {
+        $(this.tapeEl).slick('slickNext')
+    }
+
+    writeToTapeAt(index, text)
+    {
+        const tapeNullEndIndex = this.tapeDataArray.length - 1
+        const tapeNullStartIndex = this.tapeDataArray.length - 3
+
+        if (index === tapeNullStartIndex)
+        {
+            const el = $.parseHTML(this.templateData)
+            el.html(text)
+            $(this.tapeEl).slick('slickAdd', el, tapeNullEndIndex, true)
+        }
+        else if (index === tapeNullEndIndex)
+        {
+            const el = $.parseHTML(this.templateData)
+            el.html(text)
+            $(this.tapeEl).slick('slickAdd', el, true)
+        }
+        else
+        {
+            $(`[data-slick-index=${index}]`).html(text)
+        }
+    }
 }
 
 // Memeriksa apakah string yang diberikan berisikan sebuah
