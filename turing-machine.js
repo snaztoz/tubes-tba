@@ -175,6 +175,8 @@ class TapeController
 
     setOperation(jenisOperasi, tapeString)
     {
+        this.emptyTape()
+
         this.jenisOperasi = jenisOperasi
         this.tapeDataArray = tapeString.split('').concat('B', 'B', 'B', 'B')
 
@@ -187,8 +189,6 @@ class TapeController
      */
     applyTapeData()
     {
-        this.emptyTape()
-
         this.tapeDataArray.forEach(data => {
             let el;
 
