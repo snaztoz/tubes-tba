@@ -6,7 +6,7 @@
     constructor(operationRules)
     {
         this.form = new Form('#form')
-        this.tape = new TapeController('#tape')
+        this.tape = new TapeController('#tape', operationRules)
 
         this.start()
     }
@@ -152,10 +152,12 @@ class Serializer
  */
 class TapeController
 {
-    constructor(tapeEl)
+    constructor(tapeEl, operationRules)
     {
         this.tapeEl = tapeEl
         this.tapeDataCount = 7 // termasuk data yang null juga
+        this.operationRules = operationRules
+
         this.templateNull = $('#template-tape-null').html()
         this.templateData = $('#template-tape-data').html()
 
