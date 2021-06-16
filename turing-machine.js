@@ -209,7 +209,7 @@ class TapeController
 
     emptyTape()
     {
-        for (let i = 0; i < this.tapeDataArray.length, i++)
+        for (let i = 0; i < this.tapeDataArray.length; i++)
         {
             $(this.tapeEl).slick('slickRemove', i)
         }
