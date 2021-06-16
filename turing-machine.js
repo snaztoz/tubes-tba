@@ -293,6 +293,26 @@ class Operator
         this.writeHandler = writeHandler
         return this
     }
+
+    parseMovement(movementString)
+    {
+        const splittedString = movementString.split('->')
+
+        if (splittedString.length === 1)
+        {
+            return {
+                direction: splittedString[0].trim(),
+                nextState: null
+            }
+        }
+        else
+        {
+            return {
+                direction: splittedString[0].trim(),
+                nextState: splittedString[1].trim()
+            }
+        }
+    }
 }
 
 // Memeriksa apakah string yang diberikan berisikan sebuah
