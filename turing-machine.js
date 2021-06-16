@@ -13,7 +13,9 @@
     start()
     {
         this.form.onValidFormData(formData => {
-            console.log('success: ' + formData.jenisOperasi)
+            const {jenisOperasi, bilangan1, bilangan2} = formData
+            console.log('operasi: ' + jenisOperasi)
+            console.log('data tape: ' + Serializer.serializeInput(jenisOperasi, bilangan1, bilangan2))
         })
     }
  }
@@ -121,6 +123,23 @@ class Form
         }
 
         throw new Error('unknown validation rule')
+    }
+}
+
+/**
+ * Class untuk mengubah format object data form menjadi string
+ * yang akan dipahami oleh turing machine.
+ */
+class Serializer
+{
+    static serializeInput(jenisOperasi, bilangan1, bilangan2)
+    {
+        if (jenisOperasi === 'penjumlahan')
+        {
+            // TODO: tambahkan support untuk perhitungan negatif
+            return `0${'1'.repeat(bilangan1)}0${'1'.repeat(bilangan2)}`
+        }
+        // TODO: tambahkan jenis operasi yang lainnya
     }
 }
 
