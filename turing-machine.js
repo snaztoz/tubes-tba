@@ -15,8 +15,11 @@
     {
         this.form.onValidFormData(formData => {
             const {jenisOperasi, bilangan1, bilangan2} = formData
-            console.log('operasi: ' + jenisOperasi)
-            console.log('data tape: ' + Serializer.serializeInput(jenisOperasi, bilangan1, bilangan2))
+            const tapeString = Serializer
+                    .serializeInput(jenisOperasi, bilangan1, bilangan2)
+
+            this.tape.setOperation(jenisOperasi, tapeString)
+            this.tape.run()
         })
     }
  }
@@ -151,19 +154,65 @@ class TapeController
 {
     constructor(tapeEl)
     {
+        this.tapeEl = tapeEl
+        this.tapeDataCount = 7 // termasuk data yang null juga
         this.templateNull = $('#template-tape-null').html()
         this.templateData = $('#template-tape-data').html()
 
-        for (let i = 0; i < 7; i++)
-        {
-            $(tapeEl).append(this.templateNull)
-        }
-
-        $(tapeEl).slick({
+        $(this.tapeEl).slick({
             arrows: false,
             centerMode: true,
             slidesToShow: 5,
         })
+
+        for (let i = 0; i < this.tapeDataCount; i++)
+        {
+            $(this.tapeEl).slick('slickAdd', this.templateNull)
+        }
+    }
+
+    setOperation(jenisOperasi, tapeString)
+    {
+        this.jenisOperasi = jenisOperasi
+        this.tapeDataArray = tapeString.split('').concat('B', 'B', 'B', 'B')
+
+        this.applyTapeData()
+    }
+
+    applyTapeData()
+    {
+        this.emptyTape()
+
+        this.tapeDataArray.forEach(data => {
+            let el;
+
+            if (data === 'B')
+            {
+                el = this.templateNull
+            }
+            else
+            {
+                el = $.parseHTML(this.templateData)
+                $(el).html(data)
+            }
+
+            $(this.tapeEl).slick('slickAdd', el)
+            this.tapeDataCount++
+        })
+    }
+
+    run()
+    {
+        console.log('menjalankan tape')
+    }
+
+    emptyTape()
+    {
+        while (this.tapeDataCount > 0)
+        {
+            $(this.tapeEl).slick('slickRemove', this.tapeDataCount - 1)
+            this.tapeDataCount--
+        }
     }
 }
 
