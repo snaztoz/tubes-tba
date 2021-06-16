@@ -6,6 +6,15 @@
     constructor()
     {
         this.form = new Form('#form')
+
+        this.start()
+    }
+
+    start()
+    {
+        this.form.onValidFormData(formData => {
+            console.log('success: ' + formData.jenisOperasi)
+        })
     }
  }
  
@@ -30,11 +39,9 @@ class Form
             'perpangkatan': ['required-both', 'positive'],
             'logaritma-biner': ['required-both', 'positive'],
         }
-
-        this.init()
     }
 
-    init()
+    onValidFormData(callback)
     {
         $(`${this.el} #form-submit`).click(event => {
             event.preventDefault()
@@ -45,8 +52,14 @@ class Form
                 bilangan2: $(`${this.el} #bilangan-2`).val().trim(),
             })
 
-            console.log('Valid: ' + isValid)
-            console.log('err: ' + data.err)
+            if (!isValid)
+            {
+                // TODO: tampilkan error di form
+                console.log('err: ' + data.err)
+                return
+            }
+
+            callback(data)
         })
     }
 
