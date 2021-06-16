@@ -141,7 +141,7 @@ class Serializer
         if (jenisOperasi === 'penjumlahan')
         {
             // TODO: tambahkan support untuk perhitungan negatif
-            return `0${'1'.repeat(bilangan1)}0${'1'.repeat(bilangan2)}`
+            return `${'1'.repeat(bilangan1)}0${'1'.repeat(bilangan2)}`
         }
         // TODO: tambahkan jenis operasi yang lainnya
     }
@@ -218,7 +218,7 @@ class TapeController
 
     emptyTape()
     {
-        for (let i = 0; i < this.tapeDataArray.length; i++)
+        for (let i = this.tapeDataArray.length - 1; i >= 0; i--)
         {
             $(this.tapeEl).slick('slickRemove', i)
         }
@@ -264,28 +264,34 @@ class Operator
 
     static use(rules)
     {
-        _operator.rules = rules
+        this._operator.rules = rules
+        return this._operator
     }
 
     setOperation(jenisOperasi)
     {
         this.jenisOperasi = jenisOperasi
+        return this
     }
 
     setInput(input)
     {
         this.input = input
+        this.headIndex = 0
+        return this
     }
 
     setMovement(moveLeft, moveRight)
     {
         this.moveLeft = moveLeft
         this.moveRight = moveRight
+        return this
     }
 
     setWriteHandler(writeHandler)
     {
         this.writeHandler = writeHandler
+        return this
     }
 }
 
@@ -294,4 +300,9 @@ class Operator
 function isIntegerString(text)
 {
     return !isNaN(text) && parseInt(text) == text
+}
+
+function sleep(ms)
+{
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
