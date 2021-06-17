@@ -52,7 +52,7 @@ class Form
         $(`${this.el} #form-submit`).click(event => {
             event.preventDefault()
 
-            const {isValid, data} = this.validate({
+            const [isValid, data] = this.validate({
                 jenisOperasi: $(`${this.el} #jenis-operasi`).val(),
                 bilangan1: $(`${this.el} #bilangan-1`).val().trim(),
                 bilangan2: $(`${this.el} #bilangan-2`).val().trim(),
@@ -80,12 +80,12 @@ class Form
      */
     validate(operationElements)
     {
-        let isValid = false;
+        const valid = true
 
         if (!this.operationValidationRules
                 .hasOwnProperty(operationElements.jenisOperasi))
         {
-            return {isValid, data: {'err': 'unknown operation'}}
+            return [!valid, {'err': 'unknown operation'}]
         }
 
         const jenisOperasi = operationElements.jenisOperasi
@@ -99,16 +99,14 @@ class Form
             const isRuleValidationPass = this.runRuleValidation(rule, bilangan1, bilangan2)
             if (!isRuleValidationPass)
             {
-                return {isValid, data: {'err': 'invalid input'}}
+                return [!valid, {'err': 'invalid input'}]
             }
         }
 
-        isValid = true
-
-        return {
-            isValid,
-            data: {jenisOperasi, bilangan1, bilangan2}
-        }
+        return [
+            valid,
+            {jenisOperasi, bilangan1, bilangan2}
+        ]
     }
 
     runRuleValidation(rule, bilangan1, bilangan2)
