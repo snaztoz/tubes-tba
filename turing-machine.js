@@ -21,10 +21,12 @@
                     .serializeInput(jenisOperasi, bilangan1, bilangan2)
 
             await this.tape.setOperation(jenisOperasi, tapeString)
-            const resultString = await this.tape.run()
+
+            const rawResult = await this.tape.run()
+            const cleanResult = Serializer.serializeOutput(jenisOperasi, rawResult)
 
             await sleep(100)
-            fillResultBox(resultString, '-')
+            fillResultBox(rawResult, cleanResult)
         })
     }
  }
@@ -139,6 +141,23 @@ class Form
  */
 class Serializer
 {
+    static patterns()
+    {
+        return {
+            'penjumlahan': {
+                'input': (bil1, bil2) => {
+                    return `${'1'.repeat(bil1)}0${'1'.repeat(bil2)}`
+                },
+                'output': rawResult => {
+                    const zeroCharIndex = rawResult.indexOf('0')
+                    const ones =  rawResult
+                            .substring(zeroCharIndex + 1, rawResult.length)
+                    return ones.length
+                }
+            }
+        }
+    }
+
     static serializeInput(jenisOperasi, bilangan1, bilangan2)
     {
         if (jenisOperasi === 'penjumlahan')
@@ -147,6 +166,17 @@ class Serializer
             return `${'1'.repeat(bilangan1)}0${'1'.repeat(bilangan2)}`
         }
         // TODO: tambahkan jenis operasi yang lainnya
+    }
+
+    static serializeOutput(jenisOperasi, rawResult)
+    {
+        const patterns = Serializer.patterns()
+        if (!patterns.hasOwnProperty(jenisOperasi))
+        {
+            throw new Error(`unknown operation ${jenisOperasi}`)
+        }
+
+        return patterns[jenisOperasi]['output'](rawResult)
     }
 }
 
