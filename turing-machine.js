@@ -164,8 +164,10 @@ class TapeController
             currentStatus: 'STOP'
         }
 
-        this.templateNull = $('#template-tape-null').html()
-        this.templateData = $('#template-tape-data').html()
+        this.template = {
+            nullTape: $('#template-tape-null').html(),
+            dataTape: $('#template-tape-data').html()
+        }
 
         $(this.tapeEl).slick({
             arrows: false,
@@ -175,7 +177,7 @@ class TapeController
 
         for (let i = 0; i < this.operation.currentData.length; i++)
         {
-            $(this.tapeEl).slick('slickAdd', this.templateNull)
+            $(this.tapeEl).slick('slickAdd', this.nullTape)
         }
     }
 
@@ -200,11 +202,11 @@ class TapeController
 
             if (data === 'B')
             {
-                el = this.templateNull
+                el = this.template.nullTape
             }
             else
             {
-                el = $.parseHTML(this.templateData)
+                el = $.parseHTML(this.template.dataTape)
                 $(el).html(data)
             }
 
@@ -281,7 +283,7 @@ class TapeController
     {
         this.operation.currentData.splice(index, 0, text)
 
-        const el = $.parseHTML(this.templateData)
+        const el = $.parseHTML(this.template.dataTape)
         $(el).html(text)
         $(this.tapeEl).slick('slickAdd', el, index, true)
     }
