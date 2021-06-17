@@ -160,12 +160,13 @@ class Serializer
 
     static serializeInput(jenisOperasi, bilangan1, bilangan2)
     {
-        if (jenisOperasi === 'penjumlahan')
+        const patterns = Serializer.patterns()
+        if (!patterns.hasOwnProperty(jenisOperasi))
         {
-            // TODO: tambahkan support untuk perhitungan negatif
-            return `${'1'.repeat(bilangan1)}0${'1'.repeat(bilangan2)}`
+            throw new Error(`unknown operation ${jenisOperasi}`)
         }
-        // TODO: tambahkan jenis operasi yang lainnya
+
+        return patterns[jenisOperasi]['input'](bilangan1, bilangan2)
     }
 
     static serializeOutput(jenisOperasi, rawResult)
