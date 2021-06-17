@@ -14,13 +14,7 @@ const serializers = {
             }
             return `${getSignOf(bil1)}${'0'.repeat(bil1)}1${getSignOf(bil2)}${'0'.repeat(bil2)}`
         },
-
-        'output': rawResult => {
-            const zeroCharIndex = rawResult.indexOf('0')
-            const ones =  rawResult
-                    .substring(zeroCharIndex + 1, rawResult.length)
-            return ones.length
-        }
+        'output': rawResult => { /* logika serializer output */}
     },
 
     'pengurangan': {
