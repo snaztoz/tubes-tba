@@ -19,7 +19,8 @@
                     .serializeInput(jenisOperasi, bilangan1, bilangan2)
 
             await this.tape.setOperation(jenisOperasi, tapeString)
-            this.tape.run()
+            const resultString = await this.tape.run()
+            console.log(resultString)
         })
     }
  }
@@ -218,9 +219,9 @@ class TapeController
         })
     }
 
-    run()
+    async run()
     {
-        Operator
+        await Operator
             .use(this.operation.rules)
             .setOperation(this.operation.currentType)
             .setContext(this.operation.context)
@@ -231,6 +232,9 @@ class TapeController
             )
             .setWriteHandler(this.writeToTapeAt.bind(this))
             .run()
+
+        const tapeCleanLength = this.operation.currentData.length - 4
+        return this.operation.currentData.slice(0, tapeCleanLength).join('')
     }
 
     emptyTape()
