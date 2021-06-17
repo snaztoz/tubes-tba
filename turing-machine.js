@@ -383,24 +383,10 @@ class Operator
                 this.writeHandler(this.headIndex, textToWrite)
             }
 
-            if (!activeRule.hasOwnProperty('move'))
-            {
-                throw new Error(`state ${currentState} doesn't specify any movement`)
-            }
+            const [stateChanging, nextState] =
+                    this.handleStateRuleMovement(currentState, activeRule)
 
-            const {direction, nextState} = this.parseMovementString(activeRule['move'])
-            if (direction === 'left')
-            {
-                this.moveLeft()
-                this.headIndex--
-            }
-            else
-            {
-                this.moveRight()
-                this.headIndex++
-            }
-
-            if (nextState)
+            if (stateChanging)
             {
                 if (!this.rules[this.jenisOperasi]['states']
                         .hasOwnProperty(nextState))
@@ -413,6 +399,34 @@ class Operator
         }
 
         this.context.setStatus('STOP')
+    }
+
+    handleStateRuleMovement(stateName, rule)
+    {
+        if (!rule.hasOwnProperty('move'))
+        {
+            throw new Error(`state ${stateName} doesn't specify any movement`)
+        }
+
+        const {direction, nextState} = this.parseMovementString(rule['move'])
+        if (direction === 'left')
+        {
+            this.moveLeft()
+            this.headIndex--
+        }
+        else
+        {
+            this.moveRight()
+            this.headIndex++
+        }
+
+        let stateChanging = false
+        if (nextState)
+        {
+            stateChanging = true
+        }
+
+        return [stateChanging, nextState]
     }
 
     parseMovementString(movementString)
