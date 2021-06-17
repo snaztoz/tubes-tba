@@ -339,8 +339,8 @@ class Operator
     }
 
     /**
-     * Membaca rule operasi yang diberikan, kemudian menjalankan
-     * Turing Machine sesuai dengan rules yang diberikan.
+     * Membaca daftar rule operasi yang diberikan, kemudian menjalankan
+     * Turing Machine sesuai dengan operasi yang dilakukan.
      */
     async run()
     {
