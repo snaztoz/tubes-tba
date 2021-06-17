@@ -81,7 +81,7 @@ class Form
     /**
      * Menjalankan validasi untuk elemen operasi yang diberikan.
      *
-     * Akan mengembalikan object yang berisikan:
+     * Akan mengembalikan array yang berisikan:
      *
      *      isValid -> valid atau tidaknya operasi
      *      data    -> jika valid, akan berisikan data elemen operasi
