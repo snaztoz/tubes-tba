@@ -16,6 +16,7 @@
     start()
     {
         this.form.onValidFormData(async formData => {
+            removeErrorImage()
             fillResultBox('-', '-')
 
             const {jenisOperasi, bilangan1, bilangan2} = formData
@@ -71,6 +72,7 @@ class Form
             if (!isValid)
             {
                 $('#form-err').html(data.err)
+                displayErrorImage()
                 return
             }
 
@@ -540,4 +542,27 @@ function isIntegerString(text)
 function sleep(ms)
 {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+
+// Ini tidak penting sebenarnya, tapi yasudahlah :D
+let isErrorImageDisplayed = false
+
+function displayErrorImage()
+{
+    if (!isErrorImageDisplayed)
+    {
+        $('#error-image').removeClass('d-none')
+        isErrorImageDisplayed = true
+    }
+}
+
+function removeErrorImage()
+{
+    if (isErrorImageDisplayed)
+    {
+        $('#error-image').addClass('d-none')
+        isErrorImageDisplayed = false
+    }
 }
