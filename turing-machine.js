@@ -278,8 +278,9 @@ class TapeController
             .setWriteHandler(this.writeToTapeAt.bind(this))
             .run()
 
-        const tapeCleanLength = this.operation.currentData.length - 4
-        return this.operation.currentData.slice(0, tapeCleanLength).join('')
+        // PENTING! Baca dokumentasi this.trimTapeData!
+        this.trimTapeData()
+        return this.operation.currentData.join('')
     }
 
     emptyTape()
@@ -340,6 +341,44 @@ class TapeController
         const el = $.parseHTML(this.template.dataTape)
         $(el).html(text)
         $(this.tapeEl).slick('slickAdd', el, index, true)
+    }
+
+    /**
+     * Menghapus blank dari depan dan belakang data tape.
+     *
+     * Asumsinya adalah output yang dihasilkan memiliki nilai "bersih"
+     * hanya di posisi tengah
+     *
+     * Misal seperti:
+     *      BBBX000BBB (tidak ada blank yang dijepit oleh non-blank)
+     *
+     * dan bukan:
+     *      B0BBX00BB0 (ada blank yang dijepit oleh non-blank)
+     */
+    trimTapeData()
+    {
+        if (this.operation.currentData.findIndex(data => data !== 'B'))
+        {
+            this.operation.currentData = []
+            return
+        }
+
+        // trim depan
+        while (this.operation.currentData[0] === 'B')
+        {
+            this.operation.currentData.shift()
+        }
+
+        // trim belakang
+        while (true)
+        {
+            const lastIndex = this.operation.currentData.length - 1
+            if (this.operation.currentData[lastIndex] !== 'B')
+            {
+                break
+            }
+            this.operation.currentData.pop()
+        }
     }
 }
 
