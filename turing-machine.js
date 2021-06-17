@@ -177,7 +177,7 @@ class TapeController
 
         for (let i = 0; i < this.operation.currentData.length; i++)
         {
-            $(this.tapeEl).slick('slickAdd', this.nullTape)
+            $(this.tapeEl).slick('slickAdd', this.template.nullTape)
         }
     }
 
