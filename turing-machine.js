@@ -94,7 +94,7 @@ class Form
         if (!this.operationValidationRules
                 .hasOwnProperty(operationElements.jenisOperasi))
         {
-            return [!valid, {'err': 'unknown operation'}]
+            return [!valid, {'err': 'operasi tidak valid!'}]
         }
 
         const jenisOperasi = operationElements.jenisOperasi
@@ -105,10 +105,10 @@ class Form
 
         for (const rule of rules)
         {
-            const isRuleValidationPass = this.runRuleValidation(rule, bilangan1, bilangan2)
-            if (!isRuleValidationPass)
+            const [passValidation, err] = this.runRuleValidation(rule, bilangan1, bilangan2)
+            if (!passValidation)
             {
-                return [!valid, {'err': 'invalid input'}]
+                return [!valid, {'err': err}]
             }
         }
 
@@ -118,19 +118,39 @@ class Form
         ]
     }
 
+    /**
+     * Menjalankan validasi rule.
+     *
+     * Mengembalikan array yang berisikan nilai
+     *      [apakahError?, pesanError]
+     */
     runRuleValidation(rule, bilangan1, bilangan2)
     {
+        let valid
+
         if (rule === 'required-both')
         {
-            return isIntegerString(bilangan1) && isIntegerString(bilangan2)
+            valid = isIntegerString(bilangan1) && isIntegerString(bilangan2)
+            return [
+                valid,
+                valid? null : 'kedua bilangan diperlukan!'
+            ]
         }
         else if (rule === 'required-first')
         {
-            return isIntegerString(bilangan1)
+            valid = isIntegerString(bilangan1)
+            return [
+                valid,
+                valid? null : 'bilangan pertama diperlukan!'
+            ]
         }
         else if (rule === 'positive')
         {
-            return parseInt(bilangan1) > 0 && parseInt(bilangan2) > 0
+            valid = parseInt(bilangan1) > 0 && parseInt(bilangan2) > 0
+            return [
+                valid,
+                valid? null : 'kedua bilangan harus positif!'
+            ]
         }
 
         throw new Error('unknown validation rule')
