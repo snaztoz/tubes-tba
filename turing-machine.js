@@ -13,12 +13,12 @@
 
     start()
     {
-        this.form.onValidFormData(formData => {
+        this.form.onValidFormData(async formData => {
             const {jenisOperasi, bilangan1, bilangan2} = formData
             const tapeString = Serializer
                     .serializeInput(jenisOperasi, bilangan1, bilangan2)
 
-            this.tape.setOperation(jenisOperasi, tapeString)
+            await this.tape.setOperation(jenisOperasi, tapeString)
             this.tape.run()
         })
     }
@@ -161,7 +161,8 @@ class TapeController
 
             currentData: 'B'.repeat(7).split(''),
             currentType: null,
-            currentStatus: 'STOP'
+
+            context: new OperatorContext()
         }
 
         this.template = {
@@ -181,8 +182,13 @@ class TapeController
         }
     }
 
-    setOperation(jenisOperasi, tapeString)
+    async setOperation(jenisOperasi, tapeString)
     {
+        if (this.operation.context.getStatus() === 'RUNNING')
+        {
+            await this.operation.context.waitToStop()
+        }
+
         this.emptyTape()
 
         this.operation.currentType = jenisOperasi
@@ -219,6 +225,7 @@ class TapeController
         Operator
             .use(this.operation.rules)
             .setOperation(this.operation.currentType)
+            .setContext(this.operation.context)
             .setInput(this.operation.currentData)
             .setMovement(
                 () => this.moveLeft(),
@@ -305,6 +312,12 @@ class Operator
         return this
     }
 
+    setContext(context)
+    {
+        this.context = context
+        return this
+    }
+
     setInput(input)
     {
         this.input = input
@@ -334,8 +347,16 @@ class Operator
         let currentState = this.rules[this.jenisOperasi]['start-state']
         const endState = this.rules[this.jenisOperasi]['end-state']
 
+        this.context.setStatus('RUNNING')
+
         while (currentState != endState)
         {
+            if (this.context.getStatus() === 'ABORT')
+            {
+                this.context.setStatus('STOP')
+                return
+            }
+
             await sleep(1000)
 
             const stateRules = this.rules[this.jenisOperasi]['states'][currentState]
@@ -390,6 +411,8 @@ class Operator
                 currentState = nextState
             }
         }
+
+        this.context.setStatus('STOP')
     }
 
     parseMovement(movementString)
@@ -409,6 +432,39 @@ class Operator
                 direction: splittedString[0].trim(),
                 nextState: splittedString[1].trim()
             }
+        }
+    }
+}
+
+/**
+ * Memberikan sinyal kepada operator untuk memberitahukan
+ * keadaan dari operasi yang sedang dilakukan (apakah lanjut
+ * terus atau operasi harus dihentikan).
+ */
+class OperatorContext
+{
+    constructor()
+    {
+        this.status = 'STOP'
+    }
+
+    getStatus()
+    {
+        return this.status
+    }
+
+    setStatus(status)
+    {
+        this.status = status
+    }
+
+    async waitToStop()
+    {
+        this.setStatus('ABORT')
+
+        while (this.status !== 'STOP')
+        {
+            await sleep(100)
         }
     }
 }
