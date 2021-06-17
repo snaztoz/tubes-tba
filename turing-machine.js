@@ -408,7 +408,7 @@ class Operator
             throw new Error(`state ${stateName} doesn't specify any movement`)
         }
 
-        const {direction, nextState} = this.parseMovementString(rule['move'])
+        const [direction, nextState] = this.parseMovementString(rule['move'])
         if (direction === 'left')
         {
             this.moveLeft()
@@ -433,20 +433,15 @@ class Operator
     {
         const splittedString = movementString.split('->')
 
-        if (splittedString.length === 1)
+        const direction = splittedString[0].trim()
+
+        let nextState = null
+        if (splittedString.length > 1)
         {
-            return {
-                direction: splittedString[0].trim(),
-                nextState: null
-            }
+            nextState = splittedString[1].trim()
         }
-        else
-        {
-            return {
-                direction: splittedString[0].trim(),
-                nextState: splittedString[1].trim()
-            }
-        }
+
+        return [direction, nextState]
     }
 }
 
