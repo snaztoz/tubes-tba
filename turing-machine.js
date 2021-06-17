@@ -155,8 +155,14 @@ class TapeController
     constructor(tapeEl, operationRules)
     {
         this.tapeEl = tapeEl
-        this.tapeDataArray = 'B'.repeat(7).split('')
-        this.operationRules = operationRules
+
+        this.operation = {
+            rules: operationRules,
+
+            currentData: 'B'.repeat(7).split(''),
+            currentType: null,
+            currentStatus: 'STOP'
+        }
 
         this.templateNull = $('#template-tape-null').html()
         this.templateData = $('#template-tape-data').html()
@@ -167,7 +173,7 @@ class TapeController
             slidesToShow: 5,
         })
 
-        for (let i = 0; i < this.tapeDataArray.length; i++)
+        for (let i = 0; i < this.operation.currentData.length; i++)
         {
             $(this.tapeEl).slick('slickAdd', this.templateNull)
         }
@@ -177,19 +183,19 @@ class TapeController
     {
         this.emptyTape()
 
-        this.jenisOperasi = jenisOperasi
-        this.tapeDataArray = tapeString.split('').concat('B', 'B', 'B', 'B')
+        this.operation.currentType = jenisOperasi
+        this.operation.currentData = tapeString.split('').concat('B', 'B', 'B', 'B')
 
         this.applyTapeData()
     }
 
     /**
-     * Mengaplikasikan isi dari this.tapeDataArray ke dalam
+     * Mengaplikasikan isi dari this.operation.currentData ke dalam
      * tape pada DOM.
      */
     applyTapeData()
     {
-        this.tapeDataArray.forEach(data => {
+        this.operation.currentData.forEach(data => {
             let el;
 
             if (data === 'B')
@@ -209,9 +215,9 @@ class TapeController
     run()
     {
         Operator
-            .use(this.operationRules)
-            .setOperation(this.jenisOperasi)
-            .setInput(this.tapeDataArray)
+            .use(this.operation.rules)
+            .setOperation(this.operation.currentType)
+            .setInput(this.operation.currentData)
             .setMovement(
                 () => this.moveLeft(),
                 () => this.moveRight()
@@ -222,7 +228,7 @@ class TapeController
 
     emptyTape()
     {
-        for (let i = this.tapeDataArray.length - 1; i >= 0; i--)
+        for (let i = this.operation.currentData.length - 1; i >= 0; i--)
         {
             $(this.tapeEl).slick('slickRemove', i)
         }
@@ -241,13 +247,13 @@ class TapeController
     /**
      * Menulis text tertentu pada index yang diberikan.
      *
-     * Method ini akan mengubah baik value di dalam this.tapeDataArray
+     * Method ini akan mengubah baik value di dalam this.operation.currentData
      * ataupun representasinya di dalam DOM itu sendiri.
      */
     writeToTapeAt(index, text)
     {
-        const tapeStart = this.tapeDataArray.length - 1
-        const tapeEnd = this.tapeDataArray.length - 4
+        const tapeStart = this.operation.currentData.length - 1
+        const tapeEnd = this.operation.currentData.length - 4
 
         if (index === tapeStart)
         {
@@ -259,7 +265,7 @@ class TapeController
         }
         else
         {
-            this.tapeDataArray[index] = text
+            this.operation.currentData[index] = text
             $(`[data-slick-index=${index}]`).html(text)
         }
     }
@@ -268,12 +274,12 @@ class TapeController
      * Membuat ruang baru sekaligus menuliskan isinya.
      *
      * Seperti method this.writeToTapeAt, method ini juga akan
-     * mengubah value di this.tapeDataArray dan juga pada tape
-     * di DOM.
+     * mengubah value di this.operation.currentData dan juga
+     * pada tape di DOM.
      */
     writeToNewRoomAt(index, text)
     {
-        this.tapeDataArray.splice(index, 0, text)
+        this.operation.currentData.splice(index, 0, text)
 
         const el = $.parseHTML(this.templateData)
         $(el).html(text)
