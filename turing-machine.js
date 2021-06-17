@@ -3,10 +3,12 @@
  */
  class TuringMachine
  {
-    constructor(operationRules)
+    constructor(operationRules, serializingPatterns)
     {
         this.form = new Form('#form')
         this.tape = new TapeController('#tape', operationRules)
+
+        Serializer.use(serializingPatterns)
 
         this.start()
     }
@@ -141,43 +143,29 @@ class Form
  */
 class Serializer
 {
-    static patterns()
+    static use(patterns)
     {
-        return {
-            'penjumlahan': {
-                'input': (bil1, bil2) => {
-                    return `${'1'.repeat(bil1)}0${'1'.repeat(bil2)}`
-                },
-                'output': rawResult => {
-                    const zeroCharIndex = rawResult.indexOf('0')
-                    const ones =  rawResult
-                            .substring(zeroCharIndex + 1, rawResult.length)
-                    return ones.length
-                }
-            }
-        }
+        this.patterns = patterns
     }
 
     static serializeInput(jenisOperasi, bilangan1, bilangan2)
     {
-        const patterns = Serializer.patterns()
-        if (!patterns.hasOwnProperty(jenisOperasi))
+        if (!this.patterns.hasOwnProperty(jenisOperasi))
         {
             throw new Error(`unknown operation ${jenisOperasi}`)
         }
 
-        return patterns[jenisOperasi]['input'](bilangan1, bilangan2)
+        return this.patterns[jenisOperasi]['input'](bilangan1, bilangan2)
     }
 
     static serializeOutput(jenisOperasi, rawResult)
     {
-        const patterns = Serializer.patterns()
-        if (!patterns.hasOwnProperty(jenisOperasi))
+        if (!this.patterns.hasOwnProperty(jenisOperasi))
         {
             throw new Error(`unknown operation ${jenisOperasi}`)
         }
 
-        return patterns[jenisOperasi]['output'](rawResult)
+        return this.patterns[jenisOperasi]['output'](rawResult)
     }
 }
 
