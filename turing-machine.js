@@ -60,6 +60,7 @@ class Form
     {
         $(`${this.el} #form-submit`).click(event => {
             event.preventDefault()
+            $('#form-err').empty()
 
             const [isValid, data] = this.validate({
                 jenisOperasi: $(`${this.el} #jenis-operasi`).val(),
@@ -69,8 +70,7 @@ class Form
 
             if (!isValid)
             {
-                // TODO: tampilkan error di form
-                console.log('err: ' + data.err)
+                $('#form-err').html(data.err)
                 return
             }
 
