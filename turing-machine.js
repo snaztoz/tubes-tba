@@ -14,13 +14,17 @@
     start()
     {
         this.form.onValidFormData(async formData => {
+            fillResultBox('-', '-')
+
             const {jenisOperasi, bilangan1, bilangan2} = formData
             const tapeString = Serializer
                     .serializeInput(jenisOperasi, bilangan1, bilangan2)
 
             await this.tape.setOperation(jenisOperasi, tapeString)
             const resultString = await this.tape.run()
-            console.log(resultString)
+
+            await sleep(100)
+            fillResultBox(resultString, '-')
         })
     }
  }
@@ -478,6 +482,13 @@ class OperatorContext
             await sleep(100)
         }
     }
+}
+
+// Mengubah isi dari result box pada DOM.
+function fillResultBox(rawValue, cleanValue)
+{
+    $('#result #value-tape').html(rawValue)
+    $('#result #value-number').html(cleanValue)
 }
 
 // Memeriksa apakah string yang diberikan berisikan sebuah
