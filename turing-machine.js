@@ -388,7 +388,7 @@ class Operator
                 throw new Error(`state ${currentState} doesn't specify any movement`)
             }
 
-            const {direction, nextState} = this.parseMovement(activeRule['move'])
+            const {direction, nextState} = this.parseMovementString(activeRule['move'])
             if (direction === 'left')
             {
                 this.moveLeft()
@@ -415,7 +415,7 @@ class Operator
         this.context.setStatus('STOP')
     }
 
-    parseMovement(movementString)
+    parseMovementString(movementString)
     {
         const splittedString = movementString.split('->')
 
