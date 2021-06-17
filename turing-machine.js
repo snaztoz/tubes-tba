@@ -26,7 +26,7 @@
             await this.tape.setOperation(jenisOperasi, tapeString)
 
             const rawResult = await this.tape.run()
-            const cleanResult = Serializer.serializeOutput(jenisOperasi, rawResult)
+            const cleanResult = Serializer.serializeOutput(rawResult)
 
             await sleep(100)
             fillResultBox(rawResult, cleanResult)
@@ -180,14 +180,27 @@ class Serializer
         return this.patterns[jenisOperasi]['input'](bilangan1, bilangan2)
     }
 
-    static serializeOutput(jenisOperasi, rawResult)
+    /**
+     * Mengubah format tape data (string) menjadi bilangan dalam
+     * format integer
+     *
+     * Asumsi di sini adalah, output dari tiap operasi akan mengikuti
+     * format:
+     *      'X000'   => 3
+     *      'Y0'     => -1
+     *      ''       => 0
+     */
+    static serializeOutput(rawResult)
     {
-        if (!this.patterns.hasOwnProperty(jenisOperasi))
+        if (rawResult === '')
         {
-            throw new Error(`unknown operation ${jenisOperasi}`)
+            return 0
         }
 
-        return this.patterns[jenisOperasi]['output'](rawResult)
+        const sign = (rawResult.shift() === 'X') ? 1 : -1
+        const num = rawResult.length
+
+        return sign * num
     }
 }
 
