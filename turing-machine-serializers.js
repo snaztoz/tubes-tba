@@ -1,8 +1,20 @@
 const serializers = {
     'penjumlahan': {
+        // CONTOH FORMAT:
+        //      1 + 3   => X01X000
+        //      2 - 4   => X001Y0000
         'input': (bil1, bil2) => {
-            return `${'1'.repeat(bil1)}0${'1'.repeat(bil2)}`
+            const getSignOf = num => {
+                if (num === 0)
+                {
+                    // untuk bilangan 0, dibuat blank saja
+                    return 'B'
+                }
+                return num > 0 ? 'X' : 'Y'
+            }
+            return `${getSignOf(bil1)}${'0'.repeat(bil1)}1${getSignOf(bil2)}${'0'.repeat(bil2)}`
         },
+
         'output': rawResult => {
             const zeroCharIndex = rawResult.indexOf('0')
             const ones =  rawResult
