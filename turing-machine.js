@@ -53,7 +53,23 @@ class Form
             'penjumlahan': ['required-both'],
             'pengurangan': ['required-both'],
             'perkalian': ['required-both'],
-            'pembagian': ['required-both'],
+            'pembagian': [
+                'required-both',
+                // mencegah pembagian oleh 0
+                (bil1, bil2) => {
+                    return [
+                        bil2 != 0,
+                        'tidak dapat melakukan pembagian oleh 0'
+                    ]
+                },
+                // mencegah pembagian bersisa
+                (bil1, bil2) => {
+                    return [
+                        bil1 % bil2 === 0,
+                        'tidak dapat melakukan pembagian bersisa'
+                    ]
+                }
+            ],
 
             // Hanya satu angka input
             'faktorial': ['required-first', 'positive'],
@@ -162,6 +178,10 @@ class Form
                 valid,
                 valid? null : 'bilangan harus bernilai positif'
             ]
+        }
+        else if (typeof rule === 'function')
+        {
+            return rule(bilangan1, bilangan2)
         }
 
         throw new Error('unknown validation rule')
