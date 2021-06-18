@@ -142,7 +142,8 @@ class Form
             valid = isIntegerString(bilangan1) && isIntegerString(bilangan2)
             return [
                 valid,
-                valid? null : 'kedua bilangan tidak boleh kosong'
+                valid? null : 'kedua input tidak boleh kosong dan harus ' +
+                                'berupa bilangan bulat'
             ]
         }
         else if (rule === 'required-first')
@@ -150,7 +151,8 @@ class Form
             valid = isIntegerString(bilangan1)
             return [
                 valid,
-                valid? null : 'bilangan pertama tidak boleh kosong'
+                valid? null : 'bilangan pertama tidak boleh kosong dan ' +
+                                'harus berupa bilangan bulat'
             ]
         }
         else if (rule === 'positive')
