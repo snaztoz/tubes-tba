@@ -358,7 +358,7 @@ class TapeController
      */
     trimTapeData()
     {
-        if (this.operation.currentData.findIndex(data => data !== 'B'))
+        if (!this.operation.currentData.some(data => data !== 'B'))
         {
             this.operation.currentData = []
             return
