@@ -271,6 +271,16 @@ class TapeController
         })
     }
 
+    /**
+     * Menjalankan operator untuk mengerjakan operasi
+     * yang diberikan
+     *
+     * Method ini akan mengembalikan array:
+     *      [interrupted?, cloneDataTape]
+     *
+     * Jika method ini diinterupsi, data akan tetap diberikan,
+     * namun isinya cacat.
+     */
     async run()
     {
         const interrupted = await Operator
@@ -285,13 +295,8 @@ class TapeController
             .setWriteHandler(this.writeToTapeAt.bind(this))
             .run()
 
-        if (interrupted)
-        {
-            return [interrupted, null]
-        }
-
         const trimmedTape = this.getTrimmedTapeData()
-        return [!interrupted, trimmedTape.join('')]
+        return [interrupted, trimmedTape.join('')]
     }
 
     emptyTape()
