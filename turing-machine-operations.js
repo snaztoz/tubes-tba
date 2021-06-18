@@ -635,6 +635,10 @@ const operations = {
                     'write': 'B',
                     'move': 'right -> Q4'
                 },
+                {
+                    'receive': 'Z',
+                    'move': 'right -> Q30'
+                }
             ],
             'Q1': [
                 {
@@ -658,6 +662,10 @@ const operations = {
                     'receive': 'Y',
                     'write': 'B',
                     'move': 'right -> Q3'
+                },
+                {
+                    'receive': 'Z',
+                    'move': 'left -> Q31'
                 },
                 {
                     'receive': 'B',
@@ -699,6 +707,10 @@ const operations = {
                     'receive': 'Y',
                     'write': 'B',
                     'move': 'right -> Q6'
+                },
+                {
+                    'receive': 'Z',
+                    'move': 'left -> Q31'
                 },
                 {
                     'receive': 'B',
@@ -809,8 +821,8 @@ const operations = {
                     'move': 'right -> Q15'
                 },
                 {
-                    'receive': 'Z',
-                    'write': 'Z',
+                    'receive': 'X',
+                    'write': 'X',
                     'move': 'right -> Q15'
                 },
             ],
@@ -979,6 +991,80 @@ const operations = {
                     'move': 'right -> end'
                 },
             ],
+            'Q30': [
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'left -> Q32'
+                },
+                {
+                    'receive': '0',
+                    'write': 'B',
+                    'move': 'right'
+                },
+                {
+                    'receive': '1',
+                    'write': 'B',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'X',
+                    'write': 'B',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'Y',
+                    'write': 'B',
+                    'move': 'right'
+                },
+            ],
+            'Q31': [
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'right -> Q33'
+                },
+                {
+                    'receive': '0',
+                    'write': 'B',
+                    'move': 'left'
+                },
+                {
+                    'receive': '1',
+                    'write': 'B',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'X',
+                    'write': 'B',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'Y',
+                    'write': 'B',
+                    'move': 'left'
+                },
+            ], 
+            'Q32': [
+                {
+                    'receive': 'B',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'Z',
+                    'move': 'right -> end'
+                },
+            ],
+            'Q33': [
+                {
+                    'receive': 'B',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'Z',
+                    'move': 'left -> end'
+                },
+            ],
             'end':[]
         }
     },
@@ -1005,6 +1091,10 @@ const operations = {
                     'receive': 'Y',
                     'write': 'B',
                     'move': 'right -> Q4'
+                },
+                {
+                    'receive': 'Z',
+                    'move': 'right -> Q30'
                 },
             ],
             'Q1': [
@@ -1362,6 +1452,43 @@ const operations = {
                 {
                     'receive': 'B',
                     'write': 'B',
+                    'move': 'right -> end'
+                },
+            ],
+            'Q30': [
+                {
+                    'receive': '0',
+                    'write': 'B',
+                    'move': 'right'
+                },
+                {
+                    'receive': '1',
+                    'write': 'B',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'X',
+                    'write': 'B',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'Y',
+                    'write': 'B',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'left -> Q31'
+                },
+            ],
+            'Q31': [
+                {
+                    'receive': 'B',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'Z',
                     'move': 'right -> end'
                 },
             ],
