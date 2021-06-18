@@ -12,19 +12,29 @@ const serializers = {
             return `X${'0'.repeat(bil)}`
         },
 
-        // CONTOH FORMAT:
-        //      1 + 3   => X01X000
-        //      2 - 4   => X001Y0000
+        /**
+         * Mengubah ke dalam format:
+         *      3 + 2      => X0001X00
+         *      2 * (-1)   => X001Y0
+         *      2 + 0      => X001
+         *     -1 + 3      => X01Y000
+         *
+         * Bilangan kedua akan memiliki sign 'Y' jika ia berbeda
+         * tanda dengan bilangan pertama
+         */
         'two-number': (bil1, bil2) => {
-            const getSignOf = num => {
-                if (num === 0)
-                {
-                    // untuk bilangan 0, dibuat blank saja
-                    return 'B'
-                }
-                return num > 0 ? 'X' : 'Y'
+            let bil2Sign = 'X'
+
+            if (bil1 * bil2 === 0)
+            {
+                bil2Sign = ''
             }
-            return `${getSignOf(bil1)}${'0'.repeat(bil1)}1${getSignOf(bil2)}${'0'.repeat(bil2)}`
+            else if (bil1 * bil2 < 0)
+            {
+                bil2Sign = 'Y'
+            }
+
+            return `X${'0'.repeat(bil1)}1${bil2Sign}${'0'.repeat(bil2)}`
         },
     },
 
