@@ -1483,7 +1483,6 @@ const operations = {
                 },
                 {
                     'receive': 'B',
-                    'write': 'B',
                     'move': 'left -> Q31'
                 },
             ],
