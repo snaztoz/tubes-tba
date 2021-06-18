@@ -938,8 +938,7 @@ const operations = {
                 },
                 {
                     'receive': 'B',
-                    'write': 'B',
-                    'move': 'right -> end'
+                    'move': 'left -> end'
                 },
             ],
             'Q24': [
@@ -1363,8 +1362,7 @@ const operations = {
             'Q21': [
                 {
                     'receive': 'B',
-                    'write': 'B',
-                    'move': 'right -> end'
+                    'move': 'left -> end'
                 },
                 {
                     'receive': '1',
