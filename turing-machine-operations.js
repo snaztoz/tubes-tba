@@ -3,7 +3,7 @@ const operations = {
     'penjumlahan': 
     {
         'start-state': 'start',
-        'end-state': 'end',
+        'end-state': 'done',
 
         'states':
         {
