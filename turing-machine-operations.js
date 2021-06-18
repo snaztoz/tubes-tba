@@ -400,6 +400,10 @@ const operations = {
                     'write': 'X',
                     'move': 'right -> end'
                 },
+                {
+                    'receive': 'Z',
+                    'move': 'right -> end'
+                }
             ],
 
             'Q4': [
