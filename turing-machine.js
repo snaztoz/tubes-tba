@@ -290,9 +290,8 @@ class TapeController
             return [interrupted, null]
         }
 
-        // PENTING! Baca dokumentasi this.trimTapeData!
-        this.trimTapeData()
-        return [!interrupted, this.operation.currentData.join('')]
+        const trimmedTape = this.getTrimmedTapeData()
+        return [!interrupted, trimmedTape.join('')]
     }
 
     emptyTape()
@@ -367,30 +366,33 @@ class TapeController
      * dan bukan:
      *      B0BBX00BB0 (ada blank yang dijepit oleh non-blank)
      */
-    trimTapeData()
+    getTrimmedTapeData()
     {
-        if (!this.operation.currentData.some(data => data !== 'B'))
+        const clonnedTapeData = [...this.operation.currentData]
+
+        if (!clonnedTapeData.some(data => data !== 'B'))
         {
-            this.operation.currentData = []
-            return
+            return []
         }
 
         // trim depan
-        while (this.operation.currentData[0] === 'B')
+        while (clonnedTapeData[0] === 'B')
         {
-            this.operation.currentData.shift()
+            clonnedTapeData.shift()
         }
 
         // trim belakang
         while (true)
         {
-            const lastIndex = this.operation.currentData.length - 1
-            if (this.operation.currentData[lastIndex] !== 'B')
+            const lastIndex = clonnedTapeData.length - 1
+            if (clonnedTapeData[lastIndex] !== 'B')
             {
                 break
             }
-            this.operation.currentData.pop()
+            clonnedTapeData.pop()
         }
+
+        return clonnedTapeData
     }
 }
 
