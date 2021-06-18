@@ -23,19 +23,22 @@ const serializers = {
          * tanda dengan bilangan pertama
          */
         'two-number': (bil1, bil2) => {
-            const bil1Sign = (bil1 != 0)? 'X' : ''
-            let bil2Sign = 'X'
-
-            if (bil1 * bil2 === 0)
-            {
-                bil2Sign = ''
+            const getTapeReprOf = num => {
+                if (num > 0)
+                {
+                    return `X${'1'.repeat(num)}`
+                }
+                else if (num < 0)
+                {
+                    return `Y${'1'.repeat(num)}`
+                }
+                else
+                {
+                    return 'Z'
+                }
             }
-            else if (bil1 * bil2 < 0)
-            {
-                bil2Sign = 'Y'
-            }
 
-            return `${bil1Sign}${'0'.repeat(bil1)}1${bil2Sign}${'0'.repeat(bil2)}`
+            return `${getTapeReprOf(bil1)}0${getTapeReprOf(bil2)}`
         },
     },
 
