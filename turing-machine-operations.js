@@ -88,6 +88,10 @@ const operations = {
                     'receive': 'Y',
                     'move': 'right -> done'
                 },
+                {
+                    'receive': 'Z',
+                    'move': 'right -> done'
+                },
             ],
 
             'Q4': [
