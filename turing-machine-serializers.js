@@ -30,7 +30,7 @@ const serializers = {
                 }
                 else if (num < 0)
                 {
-                    return `Y${'1'.repeat(num)}`
+                    return `Y${'1'.repeat(Math.abs(num))}`
                 }
                 else
                 {
@@ -50,16 +50,16 @@ const serializers = {
      * format:
      *      'X000'   => 3
      *      'Y0'     => -1
-     *      ''       => 0
+     *      'z'      => 0
      */
     'output': rawResult => {
-        if (rawResult === '')
+        if (rawResult === 'Z')
         {
             return 0
         }
 
-        const sign = (rawResult.shift() === 'X') ? 1 : -1
-        const num = rawResult.length
+        const sign = (rawResult[0] === 'X') ? 1 : -1
+        const num = rawResult.length - 1
 
         return sign * num
     },
