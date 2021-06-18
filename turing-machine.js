@@ -486,7 +486,7 @@ class Operator
                 return interrupted
             }
 
-            await sleep(1000)
+            await sleep(800)
 
             const stateRules = this.rules[this.jenisOperasi]['states'][currentState]
             const input = this.input[this.headIndex]
