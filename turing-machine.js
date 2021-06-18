@@ -49,11 +49,12 @@ class Form
             'perkalian': ['required-both'],
             'pembagian': ['required-both'],
 
+            // Hanya satu angka input
             'faktorial': ['required-first', 'positive'],
+            'logaritma-biner': ['required-first', 'positive'],
 
             'modulo': ['required-both', 'positive'],
             'perpangkatan': ['required-both', 'positive'],
-            'logaritma-biner': ['required-both', 'positive'],
         }
     }
 
