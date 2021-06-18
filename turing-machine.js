@@ -25,7 +25,13 @@
 
             await this.tape.setOperation(jenisOperasi, tapeString)
 
-            const rawResult = await this.tape.run()
+            const [interrupted, rawResult] = await this.tape.run()
+            if (interrupted)
+            {
+                // ada kemungkinan operasi mendapati interupsi
+                return
+            }
+
             const cleanResult = Serializer.serializeOutput(rawResult)
 
             await sleep(100)
@@ -267,7 +273,7 @@ class TapeController
 
     async run()
     {
-        await Operator
+        const interrupted = await Operator
             .use(this.operation.rules)
             .setOperation(this.operation.currentType)
             .setContext(this.operation.context)
@@ -279,9 +285,14 @@ class TapeController
             .setWriteHandler(this.writeToTapeAt.bind(this))
             .run()
 
+        if (interrupted)
+        {
+            return [interrupted, null]
+        }
+
         // PENTING! Baca dokumentasi this.trimTapeData!
         this.trimTapeData()
-        return this.operation.currentData.join('')
+        return [!interrupted, this.operation.currentData.join('')]
     }
 
     emptyTape()
@@ -431,6 +442,8 @@ class Operator
      */
     async run()
     {
+        const interrupted = true
+
         let currentState = this.rules[this.jenisOperasi]['start-state']
         const endState = this.rules[this.jenisOperasi]['end-state']
 
@@ -441,7 +454,7 @@ class Operator
             if (this.context.getStatus() === 'ABORT')
             {
                 this.context.setStatus('STOP')
-                return
+                return interrupted
             }
 
             await sleep(1000)
@@ -486,6 +499,7 @@ class Operator
         }
 
         this.context.setStatus('STOP')
+        return !interrupted
     }
 
     handleStateRuleMovement(stateName, rule)
