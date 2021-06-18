@@ -1001,7 +1001,6 @@ const operations = {
             'Q30': [
                 {
                     'receive': 'B',
-                    'write': 'B',
                     'move': 'left -> Q32'
                 },
                 {
