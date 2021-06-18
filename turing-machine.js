@@ -142,7 +142,7 @@ class Form
             valid = isIntegerString(bilangan1) && isIntegerString(bilangan2)
             return [
                 valid,
-                valid? null : 'kedua bilangan diperlukan!'
+                valid? null : 'kedua bilangan tidak boleh kosong'
             ]
         }
         else if (rule === 'required-first')
@@ -150,7 +150,7 @@ class Form
             valid = isIntegerString(bilangan1)
             return [
                 valid,
-                valid? null : 'bilangan pertama diperlukan!'
+                valid? null : 'bilangan pertama tidak boleh kosong'
             ]
         }
         else if (rule === 'positive')
@@ -158,7 +158,7 @@ class Form
             valid = parseInt(bilangan1) > 0 && parseInt(bilangan2) > 0
             return [
                 valid,
-                valid? null : 'kedua bilangan harus positif!'
+                valid? null : 'bilangan harus bernilai positif'
             ]
         }
 
