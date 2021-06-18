@@ -23,6 +23,7 @@ const serializers = {
          * tanda dengan bilangan pertama
          */
         'two-number': (bil1, bil2) => {
+            const bil1Sign = (bil1 != 0)? 'X' : ''
             let bil2Sign = 'X'
 
             if (bil1 * bil2 === 0)
@@ -34,7 +35,7 @@ const serializers = {
                 bil2Sign = 'Y'
             }
 
-            return `X${'0'.repeat(bil1)}1${bil2Sign}${'0'.repeat(bil2)}`
+            return `${bil1Sign}${'0'.repeat(bil1)}1${bil2Sign}${'0'.repeat(bil2)}`
         },
     },
 
