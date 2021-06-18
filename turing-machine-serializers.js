@@ -1,48 +1,63 @@
 const serializers = {
-    'penjumlahan': {
-        'input': (bil1, bil2) => {
-            return `${'1'.repeat(bil1)}0${'1'.repeat(bil2)}`
+    'input': {
+        /**
+         * Mengubah ke dalam format:
+         *      3       => X000
+         *
+         * Asumsinya adalah bilangan yang diberikan *selalu*
+         * bernilai positif
+         */
+        'one-number': bil => {
+            console.assert(bil > 0)
+            return `X${'0'.repeat(bil)}`
         },
-        'output': rawResult => {
-            const zeroCharIndex = rawResult.indexOf('0')
-            const ones =  rawResult
-                    .substring(zeroCharIndex + 1, rawResult.length)
-            return ones.length
+
+        /**
+         * Mengubah ke dalam format:
+         *      3 + 2      => X0001X00
+         *      2 * (-1)   => X001Y0
+         *      2 + 0      => X001
+         *     -1 + 3      => X01Y000
+         *
+         * Bilangan kedua akan memiliki sign 'Y' jika ia berbeda
+         * tanda dengan bilangan pertama
+         */
+        'two-number': (bil1, bil2) => {
+            const bil1Sign = (bil1 != 0)? 'X' : ''
+            let bil2Sign = 'X'
+
+            if (bil1 * bil2 === 0)
+            {
+                bil2Sign = ''
+            }
+            else if (bil1 * bil2 < 0)
+            {
+                bil2Sign = 'Y'
+            }
+
+            return `${bil1Sign}${'0'.repeat(bil1)}1${bil2Sign}${'0'.repeat(bil2)}`
+        },
+    },
+
+    /**
+     * Mengubah format tape data (string) menjadi bilangan dalam
+     * format integer
+     *
+     * Asumsi di sini adalah, output dari tiap operasi akan mengikuti
+     * format:
+     *      'X000'   => 3
+     *      'Y0'     => -1
+     *      ''       => 0
+     */
+    'output': rawResult => {
+        if (rawResult === '')
+        {
+            return 0
         }
-    },
 
-    'pengurangan': {
-        'input': (bil1, bil2) => { /* logika serializer input */},
-        'output': rawResult => { /* logika serializer output */}
-    },
+        const sign = (rawResult.shift() === 'X') ? 1 : -1
+        const num = rawResult.length
 
-    'perkalian': {
-        'input': (bil1, bil2) => { /* logika serializer input */},
-        'output': rawResult => { /* logika serializer output */}
+        return sign * num
     },
-
-    'pembagian': {
-        'input': (bil1, bil2) => { /* logika serializer input */},
-        'output': rawResult => { /* logika serializer output */}
-    },
-
-    'faktorial': {
-        'input': (bil1, bil2) => { /* logika serializer input */},
-        'output': rawResult => { /* logika serializer output */}
-    },
-
-    'modulo': {
-        'input': (bil1, bil2) => { /* logika serializer input */},
-        'output': rawResult => { /* logika serializer output */}
-    },
-
-    'perpangkatan': {
-        'input': (bil1, bil2) => { /* logika serializer input */},
-        'output': rawResult => { /* logika serializer output */}
-    },
-
-    'logaritma-biner': {
-        'input': (bil1, bil2) => { /* logika serializer input */},
-        'output': rawResult => { /* logika serializer output */}
-    }
 }

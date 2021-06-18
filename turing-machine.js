@@ -16,6 +16,7 @@
     start()
     {
         this.form.onValidFormData(async formData => {
+            removeErrorImage()
             fillResultBox('-', '-')
 
             const {jenisOperasi, bilangan1, bilangan2} = formData
@@ -25,7 +26,7 @@
             await this.tape.setOperation(jenisOperasi, tapeString)
 
             const rawResult = await this.tape.run()
-            const cleanResult = Serializer.serializeOutput(jenisOperasi, rawResult)
+            const cleanResult = Serializer.serializeOutput(rawResult)
 
             await sleep(100)
             fillResultBox(rawResult, cleanResult)
@@ -48,11 +49,12 @@ class Form
             'perkalian': ['required-both'],
             'pembagian': ['required-both'],
 
+            // Hanya satu angka input
             'faktorial': ['required-first', 'positive'],
+            'logaritma-biner': ['required-first', 'positive'],
 
             'modulo': ['required-both', 'positive'],
             'perpangkatan': ['required-both', 'positive'],
-            'logaritma-biner': ['required-both', 'positive'],
         }
     }
 
@@ -71,6 +73,7 @@ class Form
             if (!isValid)
             {
                 $('#form-err').html(data.err)
+                displayErrorImage()
                 return
             }
 
@@ -170,22 +173,22 @@ class Serializer
 
     static serializeInput(jenisOperasi, bilangan1, bilangan2)
     {
-        if (!this.patterns.hasOwnProperty(jenisOperasi))
+        if (['faktorial', 'logaritma-biner'].includes(jenisOperasi))
         {
-            throw new Error(`unknown operation ${jenisOperasi}`)
+            return this.patterns['input']['one-number'](bilangan1)
+        }
+        else if (['penjumlahan', 'pengurangan', 'perkalian',
+                'pembagian', 'modulo', 'perpangkatan'].includes(jenisOperasi))
+        {
+            return this.patterns['input']['two-number'](bilangan1, bilangan2)
         }
 
-        return this.patterns[jenisOperasi]['input'](bilangan1, bilangan2)
+        throw new Error(`unknown operation ${jenisOperasi}`)
     }
 
-    static serializeOutput(jenisOperasi, rawResult)
+    static serializeOutput(rawResult)
     {
-        if (!this.patterns.hasOwnProperty(jenisOperasi))
-        {
-            throw new Error(`unknown operation ${jenisOperasi}`)
-        }
-
-        return this.patterns[jenisOperasi]['output'](rawResult)
+        return this.patterns['output'](rawResult)
     }
 }
 
@@ -276,8 +279,9 @@ class TapeController
             .setWriteHandler(this.writeToTapeAt.bind(this))
             .run()
 
-        const tapeCleanLength = this.operation.currentData.length - 4
-        return this.operation.currentData.slice(0, tapeCleanLength).join('')
+        // PENTING! Baca dokumentasi this.trimTapeData!
+        this.trimTapeData()
+        return this.operation.currentData.join('')
     }
 
     emptyTape()
@@ -338,6 +342,44 @@ class TapeController
         const el = $.parseHTML(this.template.dataTape)
         $(el).html(text)
         $(this.tapeEl).slick('slickAdd', el, index, true)
+    }
+
+    /**
+     * Menghapus blank dari depan dan belakang data tape.
+     *
+     * Asumsinya adalah output yang dihasilkan memiliki nilai "bersih"
+     * hanya di posisi tengah
+     *
+     * Misal seperti:
+     *      BBBX000BBB (tidak ada blank yang dijepit oleh non-blank)
+     *
+     * dan bukan:
+     *      B0BBX00BB0 (ada blank yang dijepit oleh non-blank)
+     */
+    trimTapeData()
+    {
+        if (this.operation.currentData.findIndex(data => data !== 'B'))
+        {
+            this.operation.currentData = []
+            return
+        }
+
+        // trim depan
+        while (this.operation.currentData[0] === 'B')
+        {
+            this.operation.currentData.shift()
+        }
+
+        // trim belakang
+        while (true)
+        {
+            const lastIndex = this.operation.currentData.length - 1
+            if (this.operation.currentData[lastIndex] !== 'B')
+            {
+                break
+            }
+            this.operation.currentData.pop()
+        }
     }
 }
 
@@ -540,4 +582,27 @@ function isIntegerString(text)
 function sleep(ms)
 {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+
+// Ini tidak penting sebenarnya, tapi yasudahlah :D
+let isErrorImageDisplayed = false
+
+function displayErrorImage()
+{
+    if (!isErrorImageDisplayed)
+    {
+        $('#error-image').removeClass('d-none')
+        isErrorImageDisplayed = true
+    }
+}
+
+function removeErrorImage()
+{
+    if (isErrorImageDisplayed)
+    {
+        $('#error-image').addClass('d-none')
+        isErrorImageDisplayed = false
+    }
 }
