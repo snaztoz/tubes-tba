@@ -172,35 +172,22 @@ class Serializer
 
     static serializeInput(jenisOperasi, bilangan1, bilangan2)
     {
-        if (!this.patterns.hasOwnProperty(jenisOperasi))
+        if (['faktorial', 'logaritma-biner'].includes(jenisOperasi))
         {
-            throw new Error(`unknown operation ${jenisOperasi}`)
+            return this.patterns['input']['one-number'](bilangan1)
+        }
+        else if (['penjumlahan', 'pengurangan', 'perkalian',
+                'pembagian', 'modulo', 'perpangkatan'].includes(jenisOperasi))
+        {
+            return this.patterns['input']['two-number'](bilangan1, bilangan2)
         }
 
-        return this.patterns[jenisOperasi]['input'](bilangan1, bilangan2)
+        throw new Error(`unknown operation ${jenisOperasi}`)
     }
 
-    /**
-     * Mengubah format tape data (string) menjadi bilangan dalam
-     * format integer
-     *
-     * Asumsi di sini adalah, output dari tiap operasi akan mengikuti
-     * format:
-     *      'X000'   => 3
-     *      'Y0'     => -1
-     *      ''       => 0
-     */
     static serializeOutput(rawResult)
     {
-        if (rawResult === '')
-        {
-            return 0
-        }
-
-        const sign = (rawResult.shift() === 'X') ? 1 : -1
-        const num = rawResult.length
-
-        return sign * num
+        return this.patterns['output'](rawResult)
     }
 }
 

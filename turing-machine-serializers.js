@@ -1,9 +1,21 @@
 const serializers = {
-    'penjumlahan': {
+    'input': {
+        /**
+         * Mengubah ke dalam format:
+         *      3       => X000
+         *
+         * Asumsinya adalah bilangan yang diberikan *selalu*
+         * bernilai positif
+         */
+        'one-number': bil => {
+            console.assert(bil > 0)
+            return `X${'0'.repeat(bil)}`
+        },
+
         // CONTOH FORMAT:
         //      1 + 3   => X01X000
         //      2 - 4   => X001Y0000
-        'input': (bil1, bil2) => {
+        'two-number': (bil1, bil2) => {
             const getSignOf = num => {
                 if (num === 0)
                 {
@@ -14,41 +26,27 @@ const serializers = {
             }
             return `${getSignOf(bil1)}${'0'.repeat(bil1)}1${getSignOf(bil2)}${'0'.repeat(bil2)}`
         },
-        'output': rawResult => { /* logika serializer output */}
     },
 
-    'pengurangan': {
-        'input': (bil1, bil2) => { /* logika serializer input */},
-        'output': rawResult => { /* logika serializer output */}
-    },
+    /**
+     * Mengubah format tape data (string) menjadi bilangan dalam
+     * format integer
+     *
+     * Asumsi di sini adalah, output dari tiap operasi akan mengikuti
+     * format:
+     *      'X000'   => 3
+     *      'Y0'     => -1
+     *      ''       => 0
+     */
+    'output': rawResult => {
+        if (rawResult === '')
+        {
+            return 0
+        }
 
-    'perkalian': {
-        'input': (bil1, bil2) => { /* logika serializer input */},
-        'output': rawResult => { /* logika serializer output */}
-    },
+        const sign = (rawResult.shift() === 'X') ? 1 : -1
+        const num = rawResult.length
 
-    'pembagian': {
-        'input': (bil1, bil2) => { /* logika serializer input */},
-        'output': rawResult => { /* logika serializer output */}
+        return sign * num
     },
-
-    'faktorial': {
-        'input': (bil1, bil2) => { /* logika serializer input */},
-        'output': rawResult => { /* logika serializer output */}
-    },
-
-    'modulo': {
-        'input': (bil1, bil2) => { /* logika serializer input */},
-        'output': rawResult => { /* logika serializer output */}
-    },
-
-    'perpangkatan': {
-        'input': (bil1, bil2) => { /* logika serializer input */},
-        'output': rawResult => { /* logika serializer output */}
-    },
-
-    'logaritma-biner': {
-        'input': (bil1, bil2) => { /* logika serializer input */},
-        'output': rawResult => { /* logika serializer output */}
-    }
 }
