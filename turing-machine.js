@@ -73,7 +73,18 @@ class Form
 
             // Hanya satu angka input
             'faktorial': ['required-first', 'positive'],
-            'logaritma-biner': ['required-first', 'positive'],
+            'logaritma-biner': [
+                'required-first',
+                'positive',
+                // mencegah input selain 2^n
+                (bil1, _) => {
+                    return [
+                        Number.isInteger(Math.log2(bil1)),
+                        'penghitungan logaritma biner hanya dapat dilakukan '
+                            + 'untuk angka yang merupakan hasil pangkat 2'
+                    ]
+                }
+            ],
 
             'modulo': ['required-both', 'positive'],
             'perpangkatan': ['required-both', 'positive'],
