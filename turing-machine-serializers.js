@@ -2,7 +2,7 @@ const serializers = {
     'input': {
         /**
          * Mengubah ke dalam format:
-         *      3       => X000
+         *      3       => X1110
          *
          * Asumsinya adalah bilangan yang diberikan *selalu*
          * bernilai positif
