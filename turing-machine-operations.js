@@ -2169,4 +2169,734 @@ const operations = {
             'end':[]
         }
     },
+
+    'logaritma-biner': 
+    {
+        'start-state': 'start',
+        'end-state': 'end',
+
+        'states':
+        {
+            'start': [
+                {
+                    'receive': 'X',
+                    'write': '0',
+                    'move': 'right -> Q1'
+                },
+                {
+                    'receive': '0',
+                    'write': 'Y',
+                    'move': 'right -> Q18'
+                },
+            ],
+            
+            'Q1': [
+                {
+                    'receive': '1',
+                    'write': 'B',
+                    'move': 'right -> Q2'
+                },
+                {
+                    'receive': '0',
+                    'write': 'B',
+                    'move': 'left -> Q7'
+                },
+            ],
+            
+            'Q2': [
+                {
+                    'receive': '1',
+                    'write': 'B',
+                    'move': 'right -> Q3'
+                },
+                {
+                    'receive': '0',
+                    'write': 'B',
+                    'move': 'right -> Q12'
+                },
+            ],
+
+            'Q3': [
+                {
+                    'receive': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': '0',
+                    'write': '0',
+                    'move': 'right -> Q4'
+                },
+            ],
+
+            'Q4': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'B',
+                    'write': '1',
+                    'move': 'left -> Q5'
+                },
+            ],
+
+            'Q5': [
+                {
+                    'receive': '1',
+                    'move': 'left'
+                },
+                {
+                    'receive': '0',
+                    'write': '0',
+                    'move': 'left -> Q6'
+                },
+            ],
+            
+            'Q6': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'B',
+                    'move': 'right -> Q1'
+                },
+            ],
+            
+            'Q7': [
+                {
+                    'receive': '0',
+                    'move': 'left -> Q8'
+                },
+                {
+                    'receive': 'B',
+                    'move': 'left'
+                },
+            ],
+            
+            'Q8': [
+                {
+                    'receive': 'B',
+                    'write': '1',
+                    'move': 'right -> Q9'
+                },
+                {
+                    'receive': '1',
+                    'move': 'left'
+                },
+            ],
+            
+            'Q9': [
+                {
+                    'receive': '0',
+                    'move': 'right -> Q10'
+                },
+                {
+                    'receive': '1',
+                    'move': 'right'
+                },
+            ],
+            
+            'Q10': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'right -> Q11'
+                },
+                {
+                    'receive': 'B',
+                    'move': 'right'
+                },
+            ],
+            
+            'Q11': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'B',
+                    'write': '0',
+                    'move': 'left -> Q6'
+                },
+            ],
+            
+            'Q12': [
+                {
+                    'receive': '1',
+                    'write': 'B',
+                    'move': 'right -> Q16'
+                },
+                {
+                    'receive': 'B',
+                    'move': 'left -> Q13'
+                },
+            ],
+            
+            'Q13': [
+                {
+                    'receive': 'B',
+                    'move': 'left'
+                },
+                {
+                    'receive': '0',
+                    'write': 'B',
+                    'move': 'left -> Q14'
+                },
+            ],
+            
+            'Q14': [
+                {
+                    'receive': '1',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'X',
+                    'move': 'right -> Q15'
+                },
+            ],
+            
+            'Q15': [
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'right -> end'
+                },
+                {
+                    'receive': '1',
+                    'move': 'right'
+                },
+            ],
+            'Q16': [
+                {
+                    'receive': '1',
+                    'write': 'B',
+                    'move': 'right'
+                },
+                {
+                    'receive': '0',
+                    'write': 'B',
+                    'move': 'left -> Q17'
+                },
+                {
+                    'receive': 'B',
+                    'move': 'left'
+                },
+            ],
+            'Q17': [
+                {
+                    'receive': '1',
+                    'write': 'B',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'Y',
+                    'move': 'right -> Q18'
+                },
+            ],
+            'Q18': [
+                {
+                    'receive': 'B',
+                    'write': 'X',
+                    'move': 'right -> Q19'
+                },
+            ],
+            'Q19': [
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'right -> end'
+                },
+            ],
+            
+            'end': []
+        }
+    },
+
+    'perpangkatan':
+    {
+        'start-state': 'start',
+        'end-state': 'end',
+
+        'states':
+        {
+            'start': [
+                {
+                    'receive': 'X',
+                    'write': 'B',
+                    'move': 'right -> Q1'
+                },
+            ],
+            'Q1': [
+                {
+                    'receive': '0',
+                    'write': '0',
+                    'move': 'right -> Q2'
+                },
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'right'
+                },
+            ],
+            'Q2': [
+                {
+                    'receive': 'X',
+                    'write': 'B',
+                    'move': 'right -> Q3'
+                },
+            ],
+            'Q3': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'X',
+                    'move': 'left -> Q7'
+                },
+            ],
+            'Q4': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'left -> Q5'
+                },
+            ],
+            'Q5': [
+                {
+                    'receive': '0',
+                    'write': '0',
+                    'move': 'left -> Q6'
+                },
+            ],
+            'Q6': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'right -> Q7'
+                },
+            ],
+            'Q7': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': '0',
+                    'write': '0',
+                    'move': 'right -> Q8'
+                },
+            ],
+            'Q8': [
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'right'
+                },
+                {
+                    'receive': '1',
+                    'write': 'B',
+                    'move': 'left -> Q9'
+                },
+            ],
+            'Q9': [
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'left'
+                },
+                {
+                    'receive': '0',
+                    'write': '0',
+                    'move': 'left -> Q10'
+                },
+            ],
+            'Q10': [
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'right -> Q16'
+                },
+                {
+                    'receive': '1',
+                    'write': 'Z',
+                    'move': 'right -> Q11'
+                },
+                {
+                    'receive': 'Z',
+                    'write': 'Z',
+                    'move': 'left'
+                },
+            ],
+            'Q11': [
+                {
+                    'receive': 'Z',
+                    'write': 'Z',
+                    'move': 'right'
+                },
+                {
+                    'receive': '0',
+                    'write': '0',
+                    'move': 'right -> Q12'
+                },
+            ],
+            'Q12': [
+                {
+                    'receive': 'X',
+                    'write': 'X',
+                    'move': 'right -> Q13'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'right'
+                },
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'right'
+                },
+            ],
+            'Q13': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'B',
+                    'write': '1',
+                    'move': 'left -> Q14'
+                },
+            ],
+            'Q14': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'X',
+                    'write': 'X',
+                    'move': 'left -> Q15'
+                },
+            ],
+            'Q15': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'left'
+                },
+                {
+                    'receive': '0',
+                    'write': '0',
+                    'move': 'left -> Q10'
+                },
+            ],
+            'Q16': [
+                {
+                    'receive': 'Z',
+                    'write': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': '0',
+                    'write': '0',
+                    'move': 'left -> Q17'
+                },
+            ],
+            'Q17': [
+                {
+                    'receive': '1',
+                    'write': 'Z',
+                    'move': 'right -> Q18'
+                },
+            ],
+            'Q18': [
+                {
+                    'receive': '0',
+                    'write': '0',
+                    'move': 'right -> Q19'
+                },
+            ],
+            'Q19': [
+                {
+                    'receive': '1',
+                    'write': 'B',
+                    'move': 'left -> Q20'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'X',
+                    'write': 'X',
+                    'move': 'left -> Q32'
+                },
+            ],
+            'Q20': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'left'
+                },
+                {
+                    'receive': '0',
+                    'write': '0',
+                    'move': 'left -> Q21'
+                },
+            ],
+            'Q21': [
+                {
+                    'receive': 'Z',
+                    'write': 'Z',
+                    'move': 'left'
+                },
+                {
+                    'receive': '1',
+                    'write': 'Z',
+                    'move': 'right -> Q22'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'right -> Q28'
+                },
+            ],
+            'Q22': [
+                {
+                    'receive': 'Z',
+                    'write': 'Z',
+                    'move': 'right'
+                },
+                {
+                    'receive': '0',
+                    'write': '0',
+                    'move': 'right -> Q23'
+                },
+            ],
+            'Q23': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'X',
+                    'write': 'X',
+                    'move': 'right -> Q24'
+                },
+            ],
+            'Q24': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'Z',
+                    'write': 'Z',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'left -> Q25'
+                },
+            ],
+            'Q25': [
+                {
+                    'receive': 'Z',
+                    'write': 'Z',
+                    'move': 'left'
+                },
+                {
+                    'receive': '1',
+                    'write': 'Z',
+                    'move': 'right -> Q26'
+                },
+                {
+                    'receive': 'X',
+                    'write': 'X',
+                    'move': 'left -> Q20'
+                },
+            ],
+            'Q26': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'Z',
+                    'write': 'Z',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'B',
+                    'write': '1',
+                    'move': 'left -> Q27'
+                },
+            ],
+            'Q27': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'Z',
+                    'write': 'Z',
+                    'move': 'left -> Q25'
+                },
+            ],
+            'Q28': [
+                {
+                    'receive': 'Z',
+                    'write': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': '0',
+                    'write': '0',
+                    'move': 'right -> Q29'
+                },
+            ],
+            'Q29': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'X',
+                    'write': 'X',
+                    'move': 'right -> Q30'
+                },
+            ],
+            'Q30': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'Z',
+                    'write': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'X',
+                    'write': 'X',
+                    'move': 'left -> Q31'
+                },
+            ],
+            'Q31': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'left'
+                },
+                {
+                    'receive': '0',
+                    'write': '0',
+                    'move': 'left -> Q17'
+                },
+            ], 
+            'Q32': [
+                {
+                    'receive': 'B',
+                    'move': 'left'
+                },
+                {
+                    'receive': '0',
+                    'write': 'B',
+                    'move': 'left -> Q33'
+                },
+            ],
+            'Q33': [
+                {
+                    'receive': 'Z',
+                    'write': 'B',
+                    'move': 'left -> Q34'
+                },
+            ],
+            'Q34': [
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'right'
+                },
+                {
+                    'receive': '1',
+                    'write': 'B',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'X',
+                    'write': 'X',
+                    'move': 'right -> Q35'
+                },
+            ],
+            'Q35': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'left -> end'
+                },
+            ],
+            'end':[]
+        }
+    },
 }
