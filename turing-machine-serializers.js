@@ -9,7 +9,7 @@ const serializers = {
          */
         'one-number': bil => {
             console.assert(bil > 0)
-            return `X${'0'.repeat(bil)}`
+            return `X${'1'.repeat(bil)}0`
         },
 
         /**
