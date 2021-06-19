@@ -383,12 +383,12 @@ class TapeController
      */
     writeToTapeAt(index, text)
     {
-        const tapeStart = this.operation.currentData.length - 1
+        const tapeStart = -1
         const tapeEnd = this.operation.currentData.length - 4
 
         if (index === tapeStart)
         {
-            this.writeToNewRoomAt(0, text)
+            this.writeToNewRoomAt(tapeStart, text)
         }
         else if (index === tapeEnd)
         {
@@ -410,7 +410,14 @@ class TapeController
      */
     writeToNewRoomAt(index, text)
     {
-        this.operation.currentData.splice(index, 0, text)
+        if (index === -1)
+        {
+            this.operation.currentData.splice(0, 0, text)
+        }
+        else
+        {
+            this.operation.currentData.splice(index, 0, text)
+        }
 
         const el = $.parseHTML(this.template.dataTape)
         $(el).html(text)
@@ -523,6 +530,14 @@ class Operator
             }
 
             await sleep(800)
+
+            // mencegah index out of bound, buat room baru
+            // di ujung kiri tape
+            if (this.headIndex === -1)
+            {
+                this.writeHandler(this.headIndex, 'B')
+                this.headIndex = 0
+            }
 
             const stateRules = this.rules[this.jenisOperasi]['states'][currentState]
             const input = this.input[this.headIndex]
