@@ -1,5 +1,4 @@
 const operations = {
-    // Ini belum support operasi yang mengandung angka negatif
     'penjumlahan': 
     {
         'start-state': 'start',
