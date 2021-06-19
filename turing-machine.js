@@ -124,9 +124,23 @@ class Form
 
         const jenisOperasi = operationElements.jenisOperasi
         const bilangan1 = operationElements.bilangan1
-        const bilangan2 = operationElements.bilangan2
+        let bilangan2 = operationElements.bilangan2
 
         const rules = this.operationValidationRules[jenisOperasi]
+
+        // input spoofing.
+        //
+        // Asumsinya adalah jika operasi memiliki rule required-first,
+        // maka bilangan kedua dari input TIDAK AKAN digunakan, oleh
+        // karenanya dia opsional (boleh ada ataupun tidak).
+        //
+        // Namun, jika terdapat rule lain yang membutuhkan kedua bilangan,
+        // maka rule tersebut akan fail jika input kedua tidak diberikan.
+        // Maka, spoofing berikut ini dilakukan untuk mencegah hal tersebut.
+        if (rules.includes('required-first'))
+        {
+            bilangan2 = 9999999
+        }
 
         for (const rule of rules)
         {
