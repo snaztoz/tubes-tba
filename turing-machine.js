@@ -302,6 +302,7 @@ class TapeController
 
         this.operation.currentType = jenisOperasi
         this.operation.currentData = tapeString.split('').concat('B', 'B', 'B', 'B')
+        this.operation.padBlankCount = 0
 
         this.applyTapeData()
     }
@@ -312,6 +313,18 @@ class TapeController
      */
     applyTapeData()
     {
+        if (this.operation.currentType === 'logaritma-biner')
+        {
+            const onesCount =
+                    this.operation.currentData.filter(data => data === '1').length
+
+            this.operation.padBlankCount = Math.log2(onesCount) + 1
+
+            const padBlank =
+                    'B'.repeat(this.operation.padBlankCount).split('')
+            this.operation.currentData.unshift(...padBlank)
+        }
+
         this.operation.currentData.forEach(data => {
             let el;
 
@@ -345,7 +358,10 @@ class TapeController
             .use(this.operation.rules)
             .setOperation(this.operation.currentType)
             .setContext(this.operation.context)
-            .setInput(this.operation.currentData)
+            .setInput(this.operation.currentData, () => {
+                $(this.tapeEl).slick('slickGoTo', this.operation.padBlankCount)
+                return this.operation.padBlankCount
+            })
             .setMovement(
                 () => this.moveLeft(),
                 () => this.moveRight()
@@ -488,10 +504,10 @@ class Operator
         return this
     }
 
-    setInput(input)
+    setInput(input, startIndexGetter)
     {
         this.input = input
-        this.headIndex = 0
+        this.headIndex = startIndexGetter()
         return this
     }
 
