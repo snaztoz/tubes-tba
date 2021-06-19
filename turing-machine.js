@@ -76,6 +76,17 @@ class Form
             'logaritma-biner': [
                 'required-first',
                 'positive',
+                // mencegah input 1 (input tersebut valid, namun hasil yang
+                // diberikan tidak memenuhi syarat, yakni hasil harus bilangan
+                // bulat POSITIF)
+                (bil1, _) => {
+                    return [
+                        bil1 != 1,
+                        'input valid, namun kami tidak dapat menampilkan hasil'
+                            + ' perhitungan logaritma biner yang menghasilkan'
+                            + ' nilai 0 (mohon maaf atas ketidaknyamanannya)'
+                    ]
+                },
                 // mencegah input selain 2^n
                 (bil1, _) => {
                     return [
