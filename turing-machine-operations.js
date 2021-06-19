@@ -2165,6 +2165,10 @@ const operations = {
                     'write': 'Z',
                     'move': 'right -> end'
                 },
+                {
+                    'receive': '1',
+                    'move': 'left -> end'
+                }
             ],
             'end':[]
         }
