@@ -1,5 +1,5 @@
 const operations = {
-    // Ini belum support operasi yang mengandung angka negatif
+    
     'penjumlahan': 
     {
         'start-state': 'start',
@@ -2456,7 +2456,7 @@ const operations = {
                 {
                     'receive': 'B',
                     'write': 'X',
-                    'move': 'left -> Q7'
+                    'move': 'left -> Q4'
                 },
             ],
             'Q4': [
@@ -2893,6 +2893,7 @@ const operations = {
                 },
             ],
             'end':[]
+
         }
     },
 }
