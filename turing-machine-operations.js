@@ -2165,4 +2165,252 @@ const operations = {
             'end':[]
         }
     },
+
+    'logaritma-biner': 
+    {
+        'start-state': 'start',
+        'end-state': 'end',
+
+        'states':
+        {
+            'start': [
+                {
+                    'receive': 'X',
+                    'write': '0',
+                    'move': 'right -> Q1'
+                },
+                {
+                    'receive': '0',
+                    'write': 'Y',
+                    'move': 'right -> Q18'
+                },
+            ],
+            
+            'Q1': [
+                {
+                    'receive': '1',
+                    'write': 'B',
+                    'move': 'right -> Q2'
+                },
+                {
+                    'receive': '0',
+                    'write': 'B',
+                    'move': 'left -> Q7'
+                },
+            ],
+            
+            'Q2': [
+                {
+                    'receive': '1',
+                    'write': 'B',
+                    'move': 'right -> Q3'
+                },
+                {
+                    'receive': '0',
+                    'write': 'B',
+                    'move': 'right -> Q12'
+                },
+            ],
+
+            'Q3': [
+                {
+                    'receive': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': '0',
+                    'write': '0',
+                    'move': 'right -> Q4'
+                },
+            ],
+
+            'Q4': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'B',
+                    'write': '1',
+                    'move': 'left -> Q5'
+                },
+            ],
+
+            'Q5': [
+                {
+                    'receive': '1',
+                    'move': 'left'
+                },
+                {
+                    'receive': '0',
+                    'write': '0',
+                    'move': 'left -> Q6'
+                },
+            ],
+            
+            'Q6': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'B',
+                    'move': 'right -> Q1'
+                },
+            ],
+            
+            'Q7': [
+                {
+                    'receive': '0',
+                    'move': 'left -> Q8'
+                },
+                {
+                    'receive': 'B',
+                    'move': 'left'
+                },
+            ],
+            
+            'Q8': [
+                {
+                    'receive': 'B',
+                    'write': '1',
+                    'move': 'right -> Q9'
+                },
+                {
+                    'receive': '1',
+                    'move': 'left'
+                },
+            ],
+            
+            'Q9': [
+                {
+                    'receive': '0',
+                    'move': 'right -> Q10'
+                },
+                {
+                    'receive': '1',
+                    'move': 'right'
+                },
+            ],
+            
+            'Q10': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'right -> Q11'
+                },
+                {
+                    'receive': 'B',
+                    'move': 'right'
+                },
+            ],
+            
+            'Q11': [
+                {
+                    'receive': '1',
+                    'write': '1',
+                    'move': 'right'
+                },
+                {
+                    'receive': 'B',
+                    'write': '0',
+                    'move': 'left -> Q6'
+                },
+            ],
+            
+            'Q12': [
+                {
+                    'receive': '1',
+                    'write': 'B',
+                    'move': 'right -> Q16'
+                },
+                {
+                    'receive': 'B',
+                    'move': 'left -> Q13'
+                },
+            ],
+            
+            'Q13': [
+                {
+                    'receive': 'B',
+                    'move': 'left'
+                },
+                {
+                    'receive': '0',
+                    'write': 'B',
+                    'move': 'left -> Q14'
+                },
+            ],
+            
+            'Q14': [
+                {
+                    'receive': '1',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'X',
+                    'move': 'right -> Q15'
+                },
+            ],
+            
+            'Q15': [
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'right -> end'
+                },
+                {
+                    'receive': '1',
+                    'move': 'right'
+                },
+            ],
+            'Q16': [
+                {
+                    'receive': '1',
+                    'write': 'B',
+                    'move': 'right'
+                },
+                {
+                    'receive': '0',
+                    'write': 'B',
+                    'move': 'left -> Q17'
+                },
+                {
+                    'receive': 'B',
+                    'move': 'left'
+                },
+            ],
+            'Q17': [
+                {
+                    'receive': '1',
+                    'write': 'B',
+                    'move': 'left'
+                },
+                {
+                    'receive': 'B',
+                    'write': 'Y',
+                    'move': 'right -> Q18'
+                },
+            ],
+            'Q18': [
+                {
+                    'receive': 'B',
+                    'write': 'X',
+                    'move': 'right -> Q19'
+                },
+            ],
+            'Q19': [
+                {
+                    'receive': 'B',
+                    'write': 'B',
+                    'move': 'right -> end'
+                },
+            ],
+            
+            'end': []
+        }
+    },
 }
