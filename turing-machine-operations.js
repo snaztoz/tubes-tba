@@ -2161,8 +2161,8 @@ const operations = {
                     'move': 'left'
                 },
                 {
-                    'receive': '1',
-                    'write': '1',
+                    'receive': 'Z',
+                    'write': 'Z',
                     'move': 'right -> end'
                 },
             ],
