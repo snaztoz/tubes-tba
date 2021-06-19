@@ -14,13 +14,15 @@ const serializers = {
 
         /**
          * Mengubah ke dalam format:
-         *      3 + 2      => X0001X00
-         *      2 * (-1)   => X001Y0
-         *      2 + 0      => X001
-         *     -1 + 3      => X01Y000
+         *      3 + 2      => X1110X11
+         *      2 * (-1)   => X110Y1
+         *      2 + 0      => X110Z
+         *     -1 + 3      => Y10X111
          *
-         * Bilangan kedua akan memiliki sign 'Y' jika ia berbeda
-         * tanda dengan bilangan pertama
+         * Dimana:
+         *      X -> positif
+         *      Y -> negatif
+         *      Z -> nol
          */
         'two-number': (bil1, bil2) => {
             const getTapeReprOf = num => {
@@ -48,9 +50,9 @@ const serializers = {
      *
      * Asumsi di sini adalah, output dari tiap operasi akan mengikuti
      * format:
-     *      'X000'   => 3
-     *      'Y0'     => -1
-     *      'z'      => 0
+     *      'X111'   => 3
+     *      'Y1'     => -1
+     *      'Z'      => 0
      */
     'output': rawResult => {
         if (rawResult === 'Z')
